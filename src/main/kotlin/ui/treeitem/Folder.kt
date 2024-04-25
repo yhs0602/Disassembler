@@ -7,7 +7,7 @@ class Folder(
     level: Int,
     private val file: File,
 ) : FileDrawerTreeItem(
-    caption = file.name,
+    caption = file.name.removeSuffix("/") + "/",
     level = level,
 ) {
     init {

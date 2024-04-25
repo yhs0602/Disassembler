@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -21,6 +22,12 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
     implementation("io.github.skylot:jadx-core:1.5.0")
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+    implementation("org.apache.commons:commons-compress:1.26.1")
+    implementation("com.kichik.pecoff4j:pecoff4j:0.4.1")
+//    implementation("com.github.TomSmartBishop:facile-api:706bfa2")
+    implementation("com.github.yhs0602:facile-api:-SNAPSHOT")
+
 }
 
 compose.desktop {

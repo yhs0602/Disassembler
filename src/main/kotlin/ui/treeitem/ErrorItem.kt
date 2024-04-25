@@ -1,7 +1,7 @@
 package ui.treeitem
 
-class EmptyItem(level: Int) : FileDrawerTreeItem("Empty", level) {
-    override val isOpenable: Boolean = false
+class ErrorItem(level: Int, throwable: Throwable) : FileDrawerTreeItem("Error", level) {
+    override val isOpenable: Boolean = true
 
     override fun isExpandable() = false
 
