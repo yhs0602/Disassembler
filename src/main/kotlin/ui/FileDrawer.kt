@@ -1,6 +1,8 @@
 package ui
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -31,8 +33,11 @@ fun FileDrawer(viewModel: MainViewModel) {
                 Icons.Outlined.Refresh
             }
             val rootFileNode = viewModel.fileDrawerRootNode.value
-            TreeView(rootNodeModel = rootFileNode, expansionMap = viewModel.expansionMap) { node, expanded, handleExpand ->
-                FileDrawerItemRow(node, expanded, handleExpand, viewModel::onOpenDrawerItem)
+            TreeView(
+                rootNodeModel = rootFileNode,
+                expansionMap = viewModel.expansionMap
+            ) { modifier, node, expanded, handleExpand ->
+                FileDrawerItemRow(modifier, node, expanded, handleExpand, viewModel::onOpenDrawerItem)
             }
         }
     }
@@ -43,13 +48,14 @@ fun FileDrawer(viewModel: MainViewModel) {
 @ExperimentalFoundationApi
 @Composable
 private fun FileDrawerItemRow(
+    modifier: Modifier,
     node: FileDrawerTreeItem,
     expanded: Boolean,
     handleExpand: () -> Unit,
     onOpenDrawerItem: (FileDrawerTreeItem) -> Unit
 ) {
     Row(
-        modifier = Modifier.combinedClickable(
+        modifier = modifier.combinedClickable(
             onClick = {
                 if (node.isExpandable()) {
                     handleExpand()
@@ -84,7 +90,7 @@ private fun FileDrawerItemRow(
         )
         Icon(
             painter = painterResource(
-                "folder.png"
+                node.drawable ?: "empty.png"
             ),
             contentDescription = "Folder",
             Modifier.width(20.dp),

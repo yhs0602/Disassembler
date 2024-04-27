@@ -10,6 +10,7 @@ class Folder(
 ) : FileDrawerTreeItem(
     caption = file.name.removeSuffix("/") + "/",
     level = level,
+    drawable = "folder.png"
 ) {
     init {
         assert(file.isDirectory) { "File must be a directory" }

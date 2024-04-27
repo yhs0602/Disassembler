@@ -1,10 +1,13 @@
 package ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateMap
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 interface TreeNode<T : TreeNode<T>> {
     fun isExpandable(): Boolean
@@ -16,15 +19,13 @@ interface TreeNode<T : TreeNode<T>> {
 fun <T : TreeNode<T>> TreeView(
     rootNodeModel: T,
     expansionMap: SnapshotStateMap<T, Boolean>,
-    NodeBox: @Composable (nodeModel: T, expanded: Boolean, handleExpand: () -> Unit) -> Unit
+    NodeBox: @Composable (Modifier, nodeModel: T, expanded: Boolean, handleExpand: () -> Unit) -> Unit
 ) {
     LazyColumn {
         items(getFlattenedItems(rootNodeModel, expansionMap), key = { it.node.hashCode() }) { item ->
-            NodeBox(item.node, item.isExpanded) {
+            NodeBox(Modifier.padding(start = (20 * item.level).dp), item.node, item.isExpanded) {
                 val currentlyExpanded = expansionMap[item.node] ?: false
                 expansionMap[item.node] = !currentlyExpanded
-                println("${item.node} is now ${!currentlyExpanded}")
-                println("Expansion map: ${expansionMap.entries.joinToString() { "${it.key} -> ${it.value}" }}")
             }
         }
     }

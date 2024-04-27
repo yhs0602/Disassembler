@@ -1,7 +1,6 @@
 package ui.treeitem
 
 import com.kichik.pecoff4j.io.PEParser
-import org.jetbrains.skia.Drawable
 import ui.TreeNode
 import util.isArchive
 import java.io.File
@@ -10,8 +9,7 @@ import java.io.IOException
 sealed class FileDrawerTreeItem(
     var caption: String,
     var level: Int,
-    var tag: Any? = null,  // number or path or object
-    var drawable: Drawable? = null
+    var drawable: String? = null
 ) : TreeNode<FileDrawerTreeItem> {
     abstract val isOpenable: Boolean
 
@@ -19,6 +17,8 @@ sealed class FileDrawerTreeItem(
         fun fromFile(childLevel: Int, file: File?): FileDrawerTreeItem {
             return if (file == null) {
                 EmptyItem(childLevel)
+            } else if (file.name == ".DS_Store") {
+                Unknown(childLevel, file)
             } else if (file.isDirectory) {
                 Folder(childLevel, file)
             } else {
