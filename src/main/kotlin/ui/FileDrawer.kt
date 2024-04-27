@@ -31,7 +31,7 @@ fun FileDrawer(viewModel: MainViewModel) {
                 Icons.Outlined.Refresh
             }
             val rootFileNode = viewModel.fileDrawerRootNode.value
-            TreeView(nodeModel = rootFileNode) { node, expanded, handleExpand ->
+            TreeView(rootNodeModel = rootFileNode, expansionMap = viewModel.expansionMap) { node, expanded, handleExpand ->
                 FileDrawerItemRow(node, expanded, handleExpand, viewModel::onOpenDrawerItem)
             }
         }

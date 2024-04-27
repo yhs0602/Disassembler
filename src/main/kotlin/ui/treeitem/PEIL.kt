@@ -30,4 +30,17 @@ class PEIL(level: Int, private val file: File) : FileDrawerTreeItem(file.name, l
         }
         return items
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PEIL
+
+        return file == other.file
+    }
+
+    override fun hashCode(): Int {
+        return file.hashCode()
+    }
 }

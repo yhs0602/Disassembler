@@ -1,5 +1,6 @@
 package viewmodel
 
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import storage.ProjectManager
 import ui.treeitem.EmptyItem
@@ -8,6 +9,7 @@ import java.io.File
 
 class MainViewModel {
     val fileDrawerRootNode = mutableStateOf<FileDrawerTreeItem>(EmptyItem(0))
+    val expansionMap = mutableStateMapOf<FileDrawerTreeItem, Boolean>()
 
     fun onOpenDrawerItem(item: FileDrawerTreeItem) {
 

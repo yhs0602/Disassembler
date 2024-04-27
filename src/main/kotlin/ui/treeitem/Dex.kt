@@ -28,4 +28,6 @@ class Dex(level: Int, private val file: File) : FileDrawerTreeItem(file.name, le
         }
         return items
     }
+
+    // TODO: Hashcode and equals
 }

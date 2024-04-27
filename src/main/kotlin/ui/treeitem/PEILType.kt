@@ -49,4 +49,22 @@ class PEILType(
         }
         return items
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PEILType
+
+        if (facileReflector != other.facileReflector) return false
+        if (type != other.type) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = facileReflector.hashCode()
+        result = 31 * result + type.hashCode()
+        return result
+    }
 }

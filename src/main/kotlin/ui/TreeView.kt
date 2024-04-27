@@ -1,55 +1,52 @@
 package ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 
 interface TreeNode<T : TreeNode<T>> {
     fun isExpandable(): Boolean
     fun getChildren(): List<T>
 }
 
+
 @Composable
 fun <T : TreeNode<T>> TreeView(
-    nodeModel: T,
+    rootNodeModel: T,
+    expansionMap: SnapshotStateMap<T, Boolean>,
     NodeBox: @Composable (nodeModel: T, expanded: Boolean, handleExpand: () -> Unit) -> Unit
 ) {
-    var isExpanded by remember { mutableStateOf(false) }
-    Column {
-        NodeBox(nodeModel, isExpanded) {
-            if (isExpanded) {
-                isExpanded = false
-            } else {
-                if (nodeModel.isExpandable()) {
-                    isExpanded = true
-                }
+    LazyColumn {
+        items(getFlattenedItems(rootNodeModel, expansionMap), key = { it.node.hashCode() }) { item ->
+            NodeBox(item.node, item.isExpanded) {
+                val currentlyExpanded = expansionMap[item.node] ?: false
+                expansionMap[item.node] = !currentlyExpanded
+                println("${item.node} is now ${!currentlyExpanded}")
+                println("Expansion map: ${expansionMap.entries.joinToString() { "${it.key} -> ${it.value}" }}")
             }
-        }
-        if (isExpanded) {
-            LazyColumn(modifier = Modifier.padding(start = 20.dp)) {
-                val children = nodeModel.getChildren()
-                items(children) { child ->
-                    TreeView(nodeModel = child, NodeBox = NodeBox)
-                }
-            }
-//            val children = nodeModel.getChildren()
-//            Row {
-//                Spacer(modifier = Modifier.size(20.dp))
-//                Column {
-//                    children.forEach { model ->
-//                        TreeView(nodeModel = model, NodeBox = NodeBox)
-//                    }
-//                }
-//            }
         }
     }
+}
+
+data class TreeItem<T>(val node: T, val level: Int, val isExpanded: Boolean)
+
+
+fun <T : TreeNode<T>> getFlattenedItems(
+    node: T,
+    expansionMap: MutableMap<T, Boolean>,
+    level: Int = 0
+): List<TreeItem<T>> {
+    val result = mutableListOf<TreeItem<T>>()
+    val expanded = expansionMap.getOrDefault(node, false)
+    result.add(TreeItem(node, level, expanded))
+    if (node.isExpandable() && expanded) {
+        node.getChildren().forEach { child ->
+            result.addAll(getFlattenedItems(child, expansionMap, level + 1))
+        }
+    }
+    return result
 }
 
 class TestTreeNode : TreeNode<TestTreeNode> {
@@ -65,7 +62,7 @@ class TestTreeNode : TreeNode<TestTreeNode> {
 @Preview
 @Composable
 fun TestTreeView() {
-    TreeView(nodeModel = TestTreeNode()) { nodeModel, expanded, onClick ->
-        Text("Item", modifier = Modifier.clickable(onClick = onClick))
-    }
+//    TreeView(nodeModel = TestTreeNode()) { nodeModel, expanded, onClick ->
+//        Text("Item", modifier = Modifier.clickable(onClick = onClick))
+//    }
 }
