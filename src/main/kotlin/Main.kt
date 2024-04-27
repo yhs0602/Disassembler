@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import storage.ProjectManager
 import ui.FileDrawer
 import viewmodel.MainViewModel
 import javax.swing.JFileChooser
@@ -40,6 +41,11 @@ fun App() {
                     }
                 }) {
                     Text("Open Folder")
+                }
+                Button(onClick = {
+                    ProjectManager.invalidateCache()
+                }) {
+                    Text("Invalidate Cache")
                 }
             }
             Row(Modifier.fillMaxSize()) {

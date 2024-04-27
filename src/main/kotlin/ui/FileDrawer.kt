@@ -22,7 +22,7 @@ fun FileDrawer(viewModel: MainViewModel) {
 //    val askOpen = viewModel.askOpen.collectAsState()
     Box(
         modifier = Modifier
-            .fillMaxWidth(0.2f)
+            .fillMaxWidth(0.3f)
             .fillMaxHeight()
             .background(Color.White)
             .padding(5.dp)

@@ -46,4 +46,15 @@ object ProjectManager {
         // Use murmur hash as directory name
         return File(getCacheDirectory(), hexHashValue)
     }
+
+    fun invalidateCache() {
+        if (!this::rootDirectory.isInitialized) {
+            println("Root directory is not initialized")
+            return
+        }
+        val cacheDirectory = getCacheDirectory()
+        if (cacheDirectory.exists()) {
+            cacheDirectory.deleteRecursively()
+        }
+    }
 }

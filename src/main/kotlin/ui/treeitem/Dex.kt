@@ -30,7 +30,6 @@ class Dex(level: Int, private val file: File) : FileDrawerTreeItem(file.name, le
             return
         }
         // TODO: Use jadx to decompile the dex file? Or just list the classes?
-        // TODO: Use correct path
         val jadxArgs = JadxArgs()
         jadxArgs.setInputFile(file)
         jadxArgs.outDir = targetDir
