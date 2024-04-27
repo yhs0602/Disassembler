@@ -22,7 +22,6 @@ import javax.swing.SwingUtilities
 @Preview
 fun App() {
     var selectedZipFilePath by remember { mutableStateOf<String?>(null) }
-    var zipContent by remember { mutableStateOf<List<String>>(listOf()) }
     val mainViewModel = MainViewModel()
 
     MaterialTheme {

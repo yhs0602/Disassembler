@@ -1,16 +1,13 @@
 package ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,22 +20,36 @@ import viewmodel.MainViewModel
 @Composable
 fun FileDrawer(viewModel: MainViewModel) {
 //    val askOpen = viewModel.askOpen.collectAsState()
-    Column(
+    Box(
         modifier = Modifier
+            .fillMaxWidth(0.2f)
             .fillMaxHeight()
             .background(Color.White)
+            .padding(5.dp)
     ) {
-        Column {
-            IconButton(onClick = { }) {
-                Icons.Outlined.Refresh
+        val stateHorizontal = rememberScrollState(0)
+        val maxWidth = remember { mutableStateOf(0.dp) }
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            maxWidth.value = this.maxWidth
+            Column(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(
+                    stateHorizontal
+                )
+            ) {
+                val rootFileNode = viewModel.fileDrawerRootNode.value
+                TreeView(
+                    rootNodeModel = rootFileNode,
+                    expansionMap = viewModel.expansionMap
+                ) { modifier, node, expanded, handleExpand ->
+                    FileDrawerItemRow(modifier.width(maxWidth.value), node, expanded, handleExpand, viewModel::onOpenDrawerItem)
+                }
             }
-            val rootFileNode = viewModel.fileDrawerRootNode.value
-            TreeView(
-                rootNodeModel = rootFileNode,
-                expansionMap = viewModel.expansionMap
-            ) { modifier, node, expanded, handleExpand ->
-                FileDrawerItemRow(modifier, node, expanded, handleExpand, viewModel::onOpenDrawerItem)
-            }
+            HorizontalScrollbar(
+                modifier = Modifier.align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .padding(end = 10.dp),
+                adapter = rememberScrollbarAdapter(stateHorizontal)
+            )
         }
     }
 
@@ -55,20 +66,22 @@ private fun FileDrawerItemRow(
     onOpenDrawerItem: (FileDrawerTreeItem) -> Unit
 ) {
     Row(
-        modifier = modifier.combinedClickable(
-            onClick = {
-                if (node.isExpandable()) {
-                    handleExpand()
-                } else if (node.isOpenable) {
-                    onOpenDrawerItem(node)
-                }
-            },
-            onLongClick = {
-                if (node.isOpenable) {
-                    onOpenDrawerItem(node)
-                }
-            },
-        ), verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                    if (node.isExpandable()) {
+                        handleExpand()
+                    } else if (node.isOpenable) {
+                        onOpenDrawerItem(node)
+                    }
+                },
+                onLongClick = {
+                    if (node.isOpenable) {
+                        onOpenDrawerItem(node)
+                    }
+                },
+            ),
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         val expandable = node.isExpandable()
@@ -81,7 +94,7 @@ private fun FileDrawerItemRow(
                         "expand_more.png"
                     }
                 } else {
-                    "empty.png"
+                    "blank.png"
                 }
             ),
             contentDescription = "expand",
@@ -92,7 +105,7 @@ private fun FileDrawerItemRow(
             painter = painterResource(
                 node.drawable ?: "empty.png"
             ),
-            contentDescription = "Folder",
+            contentDescription = "Icon",
             Modifier.width(20.dp),
             tint = if (expandable) Color(0xFF7F00FF) else LocalContentColor.current
         )
