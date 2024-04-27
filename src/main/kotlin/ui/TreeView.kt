@@ -3,9 +3,9 @@ package ui
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -33,15 +33,21 @@ fun <T : TreeNode<T>> TreeView(
             }
         }
         if (isExpanded) {
-            val children = nodeModel.getChildren()
-            Row {
-                Spacer(modifier = Modifier.size(20.dp))
-                Column {
-                    children.forEach { model ->
-                        TreeView(nodeModel = model, NodeBox = NodeBox)
-                    }
+            LazyColumn(modifier = Modifier.padding(start = 20.dp)) {
+                val children = nodeModel.getChildren()
+                items(children) { child ->
+                    TreeView(nodeModel = child, NodeBox = NodeBox)
                 }
             }
+//            val children = nodeModel.getChildren()
+//            Row {
+//                Spacer(modifier = Modifier.size(20.dp))
+//                Column {
+//                    children.forEach { model ->
+//                        TreeView(nodeModel = model, NodeBox = NodeBox)
+//                    }
+//                }
+//            }
         }
     }
 }

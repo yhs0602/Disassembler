@@ -23,9 +23,7 @@ fun FileDrawer(viewModel: MainViewModel) {
 //    val askOpen = viewModel.askOpen.collectAsState()
     Column(
         modifier = Modifier
-            .fillMaxWidth(0.8f)
             .fillMaxHeight()
-            .verticalScroll(rememberScrollState())
             .background(Color.White)
     ) {
         Column {
