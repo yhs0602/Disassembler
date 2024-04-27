@@ -33,12 +33,8 @@ fun FileDrawer(viewModel: MainViewModel) {
                 Icons.Outlined.Refresh
             }
             val rootFileNode = viewModel.fileDrawerRootNode.value
-            if (rootFileNode == null) {
-                Text("Nothing")
-            } else {
-                TreeView<FileDrawerTreeItem>(nodeModel = rootFileNode) { node, expanded, handleExpand ->
-                    FileDrawerItemRow(node, expanded, handleExpand, viewModel::onOpenDrawerItem)
-                }
+            TreeView(nodeModel = rootFileNode) { node, expanded, handleExpand ->
+                FileDrawerItemRow(node, expanded, handleExpand, viewModel::onOpenDrawerItem)
             }
         }
     }
@@ -76,9 +72,9 @@ private fun FileDrawerItemRow(
             painter = painterResource(
                 if (expandable) {
                     if (expanded) {
-                        "arrow_up.png"
+                        "expand_less.png"
                     } else {
-                        "arrow_down.png"
+                        "expand_more.png"
                     }
                 } else {
                     "empty.png"
@@ -90,7 +86,7 @@ private fun FileDrawerItemRow(
         )
         Icon(
             painter = painterResource(
-                "folder_icon.png"
+                "folder.png"
             ),
             contentDescription = "Folder",
             Modifier.width(20.dp),

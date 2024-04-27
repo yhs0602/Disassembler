@@ -1,31 +1,50 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import ui.FileDrawer
+import viewmodel.MainViewModel
+import javax.swing.JFileChooser
+import javax.swing.SwingUtilities
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @Preview
 fun App() {
     var selectedZipFilePath by remember { mutableStateOf<String?>(null) }
     var zipContent by remember { mutableStateOf<List<String>>(listOf()) }
+    val mainViewModel = MainViewModel()
 
     MaterialTheme {
         Column {
             TopAppBar {
                 Button(onClick = {
-                    // 파일 선택 로직 구현
+                    SwingUtilities.invokeLater {
+                        val fileChooser = JFileChooser().apply {
+                            fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
+                        }
+                        val result = fileChooser.showOpenDialog(null)
+                        if (result == JFileChooser.APPROVE_OPTION) {
+                            selectedZipFilePath = fileChooser.selectedFile.absolutePath
+                            mainViewModel.loadFiles(selectedZipFilePath!!)
+                        }
+                    }
                 }) {
-                    Text("파일 추가")
+                    Text("Open Folder")
                 }
             }
             Row(Modifier.fillMaxSize()) {
-                LazyColumn {
-                    // 트리 뷰 구현
-                }
+                FileDrawer(mainViewModel)
                 Column(Modifier.fillMaxWidth()) {
                     // 세부 뷰 구현
                 }
