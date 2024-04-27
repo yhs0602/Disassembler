@@ -3,12 +3,11 @@ package ui.tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import ui.tab.tabkind.TabKind
-import viewmodel.MainViewModel
 
 // TODO: FileDrawerTreeItem type can be different from OpenAs type
 // And they will be declared in a json settings file
 @Composable
-fun TabContent(content: TabKind?, viewModel: MainViewModel) {
+fun TabContent(content: TabKind?, logContent: String) {
     when (content) {
         null -> Text("No content")
         is TabKind.AnalysisResult -> AnalysisResultTabContent(content)

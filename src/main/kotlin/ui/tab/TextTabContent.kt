@@ -10,5 +10,8 @@ fun TextTabContent(content: TabKind.Text) {
     LaunchedEffect(content) {
         text = content.file.readText()
     }
+    // TODO: Handle large files
+    // TODO: Use syntax highlighting such as https://github.com/Qawaz/compose-code-editor
+    // TODO: Navigation to the file location
     Text(text)
 }

@@ -11,19 +11,32 @@ import ui.treeitem.Openable
 import java.io.File
 
 class MainViewModel {
+    val logContent: String
+        get() = "Log content"
     val fileDrawerRootNode = mutableStateOf<FileDrawerTreeItem>(EmptyItem(0))
     val expansionMap = mutableStateMapOf<FileDrawerTreeItem, Boolean>()
     val openTabs = mutableStateListOf<TabKind>()
+    val tabIndex = mutableStateOf(0)
 
     // Open the drawer item as a tab in the editor
     fun onOpenDrawerItem(item: Openable) {
         println("Opening item: $item")
-        openTabs.add(item.toTabKind())
+        val tabKind = item.toTabKind() // TODO: Use item as Key for efficient lookup
+        val existingIndex = openTabs.indexOf(tabKind)
+        if (existingIndex == -1) {
+            openTabs.add(tabKind)
+        } else {
+            tabIndex.value = existingIndex
+        }
     }
 
     fun loadFiles(selectedZipFilePath: String) {
         print(selectedZipFilePath)
         ProjectManager.initialize(File(selectedZipFilePath))
         fileDrawerRootNode.value = FileDrawerTreeItem.fromFile(0, File(selectedZipFilePath))
+    }
+
+    fun onTabIndexChanged(i: Int) {
+        tabIndex.value = i
     }
 }

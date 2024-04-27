@@ -50,7 +50,7 @@ fun App() {
             }
             Row(Modifier.fillMaxSize()) {
                 FileDrawer(mainViewModel)
-                WorkspaceView(mainViewModel)
+                WorkspaceView(mainViewModel, mainViewModel.tabIndex.value, mainViewModel::onTabIndexChanged)
             }
         }
     }
