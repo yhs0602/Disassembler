@@ -26,15 +26,10 @@ class Archive(level: Int, private val file: File) : FileDrawerTreeItem(file.name
 
         other as Archive
 
-        if (file != other.file) return false
-        if (expansionDirectory != other.expansionDirectory) return false
-
-        return true
+        return file == other.file
     }
 
     override fun hashCode(): Int {
-        var result = file.hashCode()
-        result = 31 * result + expansionDirectory.hashCode()
-        return result
+        return file.hashCode()
     }
 }

@@ -41,7 +41,7 @@ fun FileDrawer(viewModel: MainViewModel) {
                     rootNodeModel = rootFileNode,
                     expansionMap = viewModel.expansionMap
                 ) { modifier, node, expanded, handleExpand ->
-                    FileDrawerItemRow(modifier.width(maxWidth.value), node, expanded, handleExpand, viewModel::onOpenDrawerItem)
+                    FileDrawerItemRow(modifier.defaultMinSize(maxWidth.value), node, expanded, handleExpand, viewModel::onOpenDrawerItem)
                 }
             }
             HorizontalScrollbar(

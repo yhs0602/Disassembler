@@ -29,6 +29,10 @@ dependencies {
 //    implementation("com.github.TomSmartBishop:facile-api:706bfa2")
     implementation("com.github.yhs0602:facile-api:-SNAPSHOT")
 //    implementation("com.goncalossilva:murmurhash:0.4.0")
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    implementation("ch.qos.logback:logback-classic:1.5.6")
+    // https://mvnrepository.com/artifact/io.github.skylot/jadx-dex-input
+    runtimeOnly("io.github.skylot:jadx-dex-input:1.5.0")
 }
 
 compose.desktop {

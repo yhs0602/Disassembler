@@ -12,7 +12,7 @@ class MainViewModel {
     val expansionMap = mutableStateMapOf<FileDrawerTreeItem, Boolean>()
 
     fun onOpenDrawerItem(item: FileDrawerTreeItem) {
-
+        println("Opening item: ${item.caption}")
     }
 
     fun loadFiles(selectedZipFilePath: String) {

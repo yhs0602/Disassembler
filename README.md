@@ -2,11 +2,11 @@
 
 ## TODO
 
-- [ ] Extract APK (as archive)
+- [x] Extract APK (as archive)
 - [ ] Implement file viewers
     - [ ] Source code viewer
     - [ ] Image viewer
-    - [ ] AndroidManifest.xml viewer
+    - [ ] AndroidManifest.xml viewer (Just use JADX?)
     - [ ] XML viewer
     - [ ] Binary viewer
     - [ ] Text viewer

@@ -27,15 +27,10 @@ class APK(level: Int, val file: File) : FileDrawerTreeItem(file.name, level) {
 
         other as APK
 
-        if (file != other.file) return false
-        if (expansionDirectory != other.expansionDirectory) return false
-
-        return true
+        return file == other.file
     }
 
     override fun hashCode(): Int {
-        var result = file.hashCode()
-        result = 31 * result + expansionDirectory.hashCode()
-        return result
+        return file.hashCode()
     }
 }
