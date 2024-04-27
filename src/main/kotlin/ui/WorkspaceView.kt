@@ -26,7 +26,7 @@ fun WorkspaceView(viewModel: MainViewModel) {
                     )
                 }
             }
-            TabContent(viewModel.openTabs.getOrNull(tabIndex))
+            TabContent(viewModel.openTabs.getOrNull(tabIndex), viewModel)
         }
     }
 }

@@ -2,28 +2,21 @@ package ui.tab
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import ui.treeitem.*
+import ui.tab.tabkind.TabKind
+import viewmodel.MainViewModel
 
 // TODO: FileDrawerTreeItem type can be different from OpenAs type
 // And they will be declared in a json settings file
 @Composable
-fun TabContent(content: FileDrawerTreeItem?) {
+fun TabContent(content: TabKind?, viewModel: MainViewModel) {
     when (content) {
         null -> Text("No content")
-        is APK -> TODO("Cannot open APK files")
-        is Archive -> TODO("Cannot open archive files")
-        is Asm -> AsmTabContent(content)
-        is Dex -> TODO("Cannot open dex files")
-        is Elf -> ElfTabContent(content)
-        is EmptyItem -> TODO("Cannot open empty items")
-        is ErrorItem -> TODO("Cannot open error items")
-        is Folder -> TODO("Cannot open folders")
-        is PE -> PETabContent(content)
-        is PEIL -> PEILTabContent(content)
-        is PEILField -> TODO("Cannot open PEIL fields")
-        is PEILMethod -> PEILMethodTabContent(content)
-        is PEILType -> TODO("Cannot open PEIL types")
-        is PermissionDeniedItem -> TODO("Cannot open permission denied items")
-        is Unknown -> UnknownTabContent(content)
+        is TabKind.AnalysisResult -> AnalysisResultTabContent(content)
+        is TabKind.Binary -> BinaryTabContent(content)
+        is TabKind.FoundString -> FoundStringTabContent(content)
+        is TabKind.Hex -> HexTabContent(content)
+        is TabKind.Image -> ImageTabContent(content)
+        TabKind.Log -> LogTabContent()
+        is TabKind.Text -> TextTabContent(content)
     }
 }

@@ -15,7 +15,6 @@ class Dex(level: Int, private val file: File) : FileDrawerTreeItem(file.name, le
         targetDirectory
     }
 
-    override val isOpenable: Boolean = false
 
     override fun isExpandable(): Boolean = true
 

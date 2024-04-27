@@ -22,6 +22,10 @@ object ProjectManager {
         return File(getPrivateDirectory(), "cache")
     }
 
+    private fun getMetadataDirectory(): File {
+        return File(getPrivateDirectory(), "metadata")
+    }
+
     @Throws(IOException::class)
     fun getDirectoryForExpansion(fromFile: File): File {
         // Get murmur hash from file
@@ -56,5 +60,18 @@ object ProjectManager {
         if (cacheDirectory.exists()) {
             cacheDirectory.deleteRecursively()
         }
+    }
+
+    // Get file for write, from key
+    fun getFileFromKey(scope: File, key: String): File {
+        val metadataDirectory = getMetadataDirectory()
+        if (!metadataDirectory.mkdirs()) {
+            throw IOException("Failed to create metadata directory")
+        }
+        // hash the scope and key
+        val totalKey = scope.absolutePath + key
+        val hash = MurmurHash3.hash32x86(totalKey.encodeToByteArray())
+        val hexHash = Integer.toHexString(hash)
+        return File(getCacheDirectory(), hexHash)
     }
 }

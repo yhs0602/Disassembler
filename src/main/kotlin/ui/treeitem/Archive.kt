@@ -12,8 +12,6 @@ class Archive(level: Int, private val file: File) : FileDrawerTreeItem(file.name
         targetDirectory
     }
 
-    override val isOpenable: Boolean = false
-
     override fun isExpandable(): Boolean = true
 
     override fun getChildren(): List<FileDrawerTreeItem> {

@@ -33,6 +33,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.6")
     // https://mvnrepository.com/artifact/io.github.skylot/jadx-dex-input
     runtimeOnly("io.github.skylot:jadx-dex-input:1.5.0")
+    // https://mvnrepository.com/artifact/org.apache.tika/tika-core
+    implementation("org.apache.tika:tika-core:2.9.2")
 }
 
 compose.desktop {

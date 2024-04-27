@@ -72,22 +72,6 @@ suspend fun <T : TreeNode<T>> getFlattenedItemsAsync(
     result
 }
 
-fun <T : TreeNode<T>> getFlattenedItems(
-    node: T,
-    expansionMap: MutableMap<T, Boolean>,
-    level: Int = 0
-): List<TreeItem<T>> {
-    val result = mutableListOf<TreeItem<T>>()
-    val expanded = expansionMap.getOrDefault(node, false)
-    println("Node: $node, level: $level, expanded: $expanded")
-    result.add(TreeItem(node, level, expanded))
-    if (node.isExpandable() && expanded) {
-        node.getChildren().forEach { child ->
-            result.addAll(getFlattenedItems(child, expansionMap, level + 1))
-        }
-    }
-    return result
-}
 
 class TestTreeNode : TreeNode<TestTreeNode> {
     override fun isExpandable(): Boolean {

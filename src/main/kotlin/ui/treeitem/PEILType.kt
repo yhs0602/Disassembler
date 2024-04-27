@@ -3,14 +3,15 @@ package ui.treeitem
 import at.pollaknet.api.facile.FacileReflector
 import at.pollaknet.api.facile.symtab.symbols.Type
 import util.getValueFromTypeKindAndBytes
+import java.io.File
 
 class PEILType(
     level: Int,
     caption: String,
+    private val file: File,
     private val facileReflector: FacileReflector,
     private val type: Type
 ) : FileDrawerTreeItem(caption, level) {
-    override val isOpenable: Boolean = false
 
     override fun isExpandable(): Boolean = true
 
@@ -42,6 +43,7 @@ class PEILType(
                 PEILMethod(
                     level + 1,
                     caption,
+                    file,
                     facileReflector,
                     method
                 )

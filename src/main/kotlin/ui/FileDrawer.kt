@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import ui.treeitem.FileDrawerTreeItem
+import ui.treeitem.Openable
 import viewmodel.MainViewModel
 
 @ExperimentalFoundationApi
@@ -41,7 +42,13 @@ fun FileDrawer(viewModel: MainViewModel) {
                     rootNodeModel = rootFileNode,
                     expansionMap = viewModel.expansionMap
                 ) { modifier, node, expanded, handleExpand ->
-                    FileDrawerItemRow(modifier.defaultMinSize(maxWidth.value), node, expanded, handleExpand, viewModel::onOpenDrawerItem)
+                    FileDrawerItemRow(
+                        modifier.defaultMinSize(maxWidth.value),
+                        node,
+                        expanded,
+                        handleExpand,
+                        viewModel::onOpenDrawerItem
+                    )
                 }
             }
             HorizontalScrollbar(
@@ -63,7 +70,7 @@ private fun FileDrawerItemRow(
     node: FileDrawerTreeItem,
     expanded: Boolean,
     handleExpand: () -> Unit,
-    onOpenDrawerItem: (FileDrawerTreeItem) -> Unit
+    onOpenDrawerItem: (Openable) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -71,12 +78,12 @@ private fun FileDrawerItemRow(
                 onClick = {
                     if (node.isExpandable()) {
                         handleExpand()
-                    } else if (node.isOpenable) {
+                    } else if (node is Openable) {
                         onOpenDrawerItem(node)
                     }
                 },
                 onLongClick = {
-                    if (node.isOpenable) {
+                    if (node is Openable) {
                         onOpenDrawerItem(node)
                     }
                 },

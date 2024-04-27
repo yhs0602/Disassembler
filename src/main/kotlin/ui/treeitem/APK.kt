@@ -15,8 +15,6 @@ class APK(level: Int, val file: File) : FileDrawerTreeItem(file.name, level) {
         targetDirectory
     }
 
-    override val isOpenable: Boolean = false
-
     override fun isExpandable(): Boolean = true
 
     override fun getChildren(): List<FileDrawerTreeItem> {

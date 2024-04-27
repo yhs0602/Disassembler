@@ -16,7 +16,6 @@ class Folder(
         assert(file.isDirectory) { "File must be a directory" }
     }
 
-    override val isOpenable = false
 
     override fun isExpandable() = true
 

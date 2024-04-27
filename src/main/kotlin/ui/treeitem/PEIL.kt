@@ -1,10 +1,10 @@
 package ui.treeitem
 
 import at.pollaknet.api.facile.Facile
+import ui.tab.tabkind.TabKind
 import java.io.File
 
-class PEIL(level: Int, private val file: File) : FileDrawerTreeItem(file.name, level) {
-    override val isOpenable: Boolean = true
+class PEIL(level: Int, private val file: File) : FileDrawerTreeItem(file.name, level), Openable {
 
     override fun isExpandable(): Boolean = true
 
@@ -20,15 +20,20 @@ class PEIL(level: Int, private val file: File) : FileDrawerTreeItem(file.name, l
                     PEILType(
                         childLevel,
                         type.namespace + "." + type.name,
+                        file,
                         facileReflector,
                         type
                     )
                 )
             }
         } catch (e: Exception) {
-            items.add(ErrorItem(childLevel, e))
+            items.add(ErrorItem(childLevel, file, e))
         }
         return items
+    }
+
+    override fun toTabKind(): TabKind {
+        TODO("Not yet implemented")
     }
 
     override fun equals(other: Any?): Boolean {

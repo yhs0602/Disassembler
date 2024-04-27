@@ -6,13 +6,11 @@ import util.isArchive
 import java.io.File
 import java.io.IOException
 
-    sealed class FileDrawerTreeItem(
+sealed class FileDrawerTreeItem(
     var caption: String,
     var level: Int,
     var drawable: String? = null
 ) : TreeNode<FileDrawerTreeItem> {
-    abstract val isOpenable: Boolean
-
     companion object {
         fun fromFile(childLevel: Int, file: File?): FileDrawerTreeItem {
             return if (file == null) {
