@@ -2,16 +2,16 @@
 
 ## TODO
 
-- [x] Extract APK (as archive)
+- [x] Extract APK (jadx)
 - [ ] Implement file viewers
     - [ ] Source code viewer
     - [ ] Image viewer
-    - [ ] AndroidManifest.xml viewer (Just use JADX?)
+    - [x] AndroidManifest.xml viewer (Just use JADX?)
     - [ ] XML viewer
     - [ ] Binary viewer
     - [ ] Text viewer
-- [ ] Implement storage manager
-- [ ] Correctly implement expansion of files
+- [x] Implement storage manager
+- [x] Correctly implement expansion of files
 - [ ] Integrate capstone disassembler
 - [ ] Implement symbol tables
 - [ ] Jump to JNI functions from java functions
