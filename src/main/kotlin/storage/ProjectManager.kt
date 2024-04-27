@@ -14,11 +14,11 @@ object ProjectManager {
         rootDirectory = directory
     }
 
-    fun getPrivateDirectory(): File {
+    private fun getPrivateDirectory(): File {
         return File(rootDirectory, ".reverser")
     }
 
-    fun getCacheDirectory(): File {
+    private fun getCacheDirectory(): File {
         return File(getPrivateDirectory(), "cache")
     }
 

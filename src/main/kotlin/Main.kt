@@ -3,7 +3,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,6 +13,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import storage.ProjectManager
 import ui.FileDrawer
+import ui.WorkspaceView
 import viewmodel.MainViewModel
 import javax.swing.JFileChooser
 import javax.swing.SwingUtilities
@@ -50,9 +50,7 @@ fun App() {
             }
             Row(Modifier.fillMaxSize()) {
                 FileDrawer(mainViewModel)
-                Column(Modifier.fillMaxWidth()) {
-                    // 세부 뷰 구현
-                }
+                WorkspaceView(mainViewModel)
             }
         }
     }
